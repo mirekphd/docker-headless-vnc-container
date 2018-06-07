@@ -86,7 +86,7 @@ RUN apt-get update \
 #################################################################################################################
 
 # Download and Install RStudio
-RUN apt-get install gdebi-core && \
+RUN apt-get update && apt-get install -y gdebi-core && \
 	wget https://download1.rstudio.org/rstudio-1.0.44-amd64.deb && \
 	sudo gdebi rstudio-1.0.44-amd64.deb && \
 	rm rstudio-1.0.44-amd64.deb

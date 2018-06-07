@@ -81,6 +81,17 @@ RUN apt-get update \
 		r-recommended=${R_BASE_VER}-*
 
 
+#################################################################################################################
+#   RSTUDIO
+#################################################################################################################
+
+# Download and Install RStudio
+RUN apt-get install gdebi-core && \
+	wget https://download1.rstudio.org/rstudio-1.0.44-amd64.deb && \
+	sudo gdebi rstudio-1.0.44-amd64.deb && \
+	rm rstudio-1.0.44-amd64.deb
+
+
 ### configure startup
 RUN $INST_SCRIPTS/libnss_wrapper.sh
 ADD ./src/common/scripts $STARTUPDIR

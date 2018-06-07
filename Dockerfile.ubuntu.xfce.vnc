@@ -53,6 +53,34 @@ RUN $INST_SCRIPTS/chrome.sh
 RUN $INST_SCRIPTS/xfce_ui.sh
 ADD ./src/common/xfce/ $HOME/
 
+
+#################################################################################################################
+#   INITIALIZE R
+#################################################################################################################
+
+#ARG R_BASE_VER=3.4.4
+ARG R_BASE_VER=3.5.0
+
+# # caution: this will currently install only the 3.4.4 version of R 
+# RUN sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9 && \
+# 	add-apt-repository 'deb [arch=amd64,i386] https://cran.rstudio.com/bin/linux/ubuntu xenial/' && \
+# 	apt-get update && apt-get install -y r-base
+
+# add Dirk Eddelbuettel's R 3.5 binaries github repo to sources list
+# RUN echo "deb [trusted=yes] https://eddelbuettel.github.io/drr35/ ./" > /etc/apt/sources.list.d/debian-r-3.5.list 
+# RUN echo "deb [trusted=yes] https://raw.githubusercontent.com/eddelbuettel/drr35/master/docs/ /" > /etc/apt/sources.list.d/debian-r-3.5.list 
+
+# add to sources lists Michael Rutter's Launchpad repo with R-base 3.5 (RRutter v3.5)
+RUN echo "deb [trusted=yes] http://ppa.launchpad.net/marutter/rrutter3.5/ubuntu xenial main" > /etc/apt/sources.list.d/rrutter3.5_xenial.list
+
+# Now install R-base[-dev] 3.5.0 from Michael Rutter's Launchpad repo
+RUN apt-get update \
+	&& apt-get install -y \
+		r-base=${R_BASE_VER}-* \
+		r-base-dev=${R_BASE_VER}-* \
+		r-recommended=${R_BASE_VER}-*
+
+
 ### configure startup
 RUN $INST_SCRIPTS/libnss_wrapper.sh
 ADD ./src/common/scripts $STARTUPDIR

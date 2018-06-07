@@ -85,11 +85,13 @@ RUN apt-get update \
 #   RSTUDIO
 #################################################################################################################
 
+ARG RSTUDIO_VER=1.1.453
+
 # Download and Install RStudio
 RUN apt-get update && apt-get install -y gdebi-core && \
-	wget https://download1.rstudio.org/rstudio-1.0.44-amd64.deb && \
-	sudo gdebi rstudio-1.0.44-amd64.deb && \
-	rm rstudio-1.0.44-amd64.deb
+	wget https://download1.rstudio.org/rstudio-${RSTUDIO_VER}-amd64.deb && \
+	gdebi rstudio-${RSTUDIO_VER}-amd64.deb && \
+	rm rstudio-${RSTUDIO_VER}-amd64.deb
 
 
 ### configure startup
